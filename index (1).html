@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelişmiş Semantic AI MRP/ERP Sistem Mimarisi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #2196F3, #21CBF3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .architecture-layer {
+            margin: 30px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .layer-title {
+            background: #2196F3;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .component {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #2196F3;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .component:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .component-title {
+            font-weight: bold;
+            color: #1976D2;
+            margin-bottom: 8px;
+        }
+        .component-desc {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.4;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #2196F3;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        .innovation-badge {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .comparison-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        .comparison-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #d84315;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .vs-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .vs-title {
+            font-weight: bold;
+            color: #d84315;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ffab91;
+            padding-bottom: 8px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .weakness-list li:before {
+            content: "✗";
+            color: #f44336;
+        }
+        .data-flow {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+        .flow-step {
+            display: inline-block;
+            background: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 8px;
+            border: 2px solid #2196F3;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .flow-step:hover {
+            background: #2196F3;
+            color: white;
+        }
+
+        /* Clickable Links Styles */
+        .clickable-tech {
+            color: #1976D2;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .clickable-tech:hover {
+            color: #FF6B35;
+            text-decoration: none;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .modal h3 {
+            color: #1976D2;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .external-link {
+            display: inline-block;
+            background: #2196F3;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+        .external-link:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Gelişmiş Semantic AI MRP/ERP Sistem Mimarisi</h1>
+            <p style="color: #666; font-size: 1.1em;">Next-Generation NLP-to-Code Platform</p>
+        </div>
+
+        <!-- Katman 1: Semantic Foundation -->
+        <div class="architecture-layer">
+            <div class="layer-title">🧠 Katman 1: Semantic Intelligence Foundation</div>
+            <div class="components-grid">
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="triple-store">Triple Store</span> + 
+                        <span class="clickable-tech" data-tech="inference">Inference</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">
+                        <span class="clickable-tech" data-tech="apache-jena">Apache Jena</span> + 
+                        <span class="clickable-tech" data-tech="owl-reasoner">OWL Reasoner</span> ile semantic reasoning
+                    </div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="mrp">MRP</span>/<span class="clickable-tech" data-tech="erp">ERP</span> 
+                        <span class="clickable-tech" data-tech="ontologies">Ontologies</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Domain-specific knowledge representation</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="business-rules-engine">Business Rules Engine</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">
+                        <span class="clickable-tech" data-tech="swrl">SWRL</span> rules + semantic validation
+                    </div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="context-memory-graph">Context Memory Graph</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Conversation + domain context management</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-arrow">⬇️</div>
+
+        <!-- Katman 2: Hybrid Intelligence -->
+        <div class="architecture-layer">
+            <div class="layer-title">🤖 Katman 2: Hybrid Intelligence Layer</div>
+            <div class="components-grid">
+                <div class="component">
+                    <div class="component-title">
+                        Semantic <span class="clickable-tech" data-tech="nlp">NLP</span> Parser 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">Ontology-guided intent & entity recognition</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="llm">LLM</span> Orchestrator 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">Multi-model routing + semantic context injection</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="reasoning-coordinator">Reasoning Coordinator</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Semantic + Statistical + Neural reasoning fusion</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="agent-coordination">Agent Coordination Hub</span> 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">Semantic-aware agent orchestration</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-arrow">⬇️</div>
+
+        <!-- Katman 3: Specialized AI Agents -->
+        <div class="architecture-layer">
+            <div class="layer-title">👥 Katman 3: Semantic-Aware AI Agents</div>
+            <div class="components-grid">
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="domain-expert-agent">Domain Expert Agent</span> 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">MRP/ERP domain knowledge + semantic reasoning</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="architecture-agent">Architecture Agent</span> 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">Ontology-guided system design</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="code-generation-agent">Code Generation Agent</span> 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">Semantic template matching + LLM synthesis</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="validation-agent">Validation Agent</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Semantic rule-based code validation</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="integration-agent">Integration Agent</span> 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">Semantic API mapping + data transformation</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="test-agent">Test Agent</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Ontology-based test scenario generation</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-arrow">⬇️</div>
+
+        <!-- Katman 4: Code Generation Engine -->
+        <div class="architecture-layer">
+            <div class="layer-title">⚙️ Katman 4: Intelligent Code Generation Engine</div>
+            <div class="components-grid">
+                <div class="component">
+                    <div class="component-title">
+                        Semantic <span class="clickable-tech" data-tech="dsl">DSL</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Business rules to code transformation language</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="pattern-library">Pattern Library</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Ontology-mapped code templates</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        Multi-Target Generator <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">
+                        <span class="clickable-tech" data-tech="python">Python</span>, 
+                        <span class="clickable-tech" data-tech="java">Java</span>, 
+                        <span class="clickable-tech" data-tech="javascript">JavaScript</span>, 
+                        <span class="clickable-tech" data-tech="sql">SQL</span> generation
+                    </div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="application-assembler">Application Assembler</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Full application stack generation</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-arrow">⬇️</div>
+
+        <!-- Katman 5: Workflow Orchestration -->
+        <div class="architecture-layer">
+            <div class="layer-title">🔄 Katman 5: Semantic Workflow Orchestration</div>
+            <div class="components-grid">
+                <div class="component">
+                    <div class="component-title">
+                        Semantic <span class="clickable-tech" data-tech="n8n">n8n</span> 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">Ontology-guided workflow automation</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="event-driven-architecture">Event-Driven Architecture</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Semantic event sourcing + processing</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="self-healing-workflows">Self-Healing Workflows</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Automatic error detection + recovery</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="process-mining">Process Mining</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Workflow optimization + bottleneck analysis</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flow-arrow">⬇️</div>
+
+        <!-- Katman 6: Data & Integration -->
+        <div class="architecture-layer">
+            <div class="layer-title">💾 Katman 6: Hybrid Data & Integration Layer</div>
+            <div class="components-grid">
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="semantic-triple-store">Semantic Triple Store</span> 
+                        <span class="innovation-badge">MEVCUT</span>
+                    </div>
+                    <div class="component-desc">
+                        <span class="clickable-tech" data-tech="rdf">RDF</span> knowledge graph storage
+                    </div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="document-store">Document Store</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">
+                        <span class="clickable-tech" data-tech="mongodb">MongoDB</span> for unstructured data
+                    </div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="vector-database">Vector Database</span> 
+                        <span class="innovation-badge">YENİ</span>
+                    </div>
+                    <div class="component-desc">Embeddings for semantic search</div>
+                </div>
+                <div class="component">
+                    <div class="component-title">
+                        <span class="clickable-tech" data-tech="erp-connectors">ERP Connectors</span> 
+                        <span class="innovation-badge">GELİŞTİRİLDİ</span>
+                    </div>
+                    <div class="component-desc">
+                        <span class="clickable-tech" data-tech="sap">SAP</span>, 
+                        <span class="clickable-tech" data-tech="oracle">Oracle</span>, 
+                        <span class="clickable-tech" data-tech="dynamics365">Dynamics 365</span> adapters
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Flow Visualization -->
+        <div class="data-flow">
+            <h3 style="text-align: center; color: #1976D2; margin-bottom: 20px;">🌊 Semantic Data Flow</h3>
+            <div style="text-align: center; line-height: 2;">
+                <span class="flow-step clickable-tech" data-tech="natural-language-processing">Natural Language Input</span> →
+                <span class="flow-step clickable-tech" data-tech="semantic-nlp-parsing">Semantic NLP Parsing</span> →
+                <span class="flow-step clickable-tech" data-tech="ontology-understanding">Ontology Understanding</span> →
+                <span class="flow-step clickable-tech" data-tech="knowledge-graph-query">Knowledge Graph Query</span> →
+                <span class="flow-step clickable-tech" data-tech="multi-agent-reasoning">Multi-Agent Reasoning</span> →
+                <span class="flow-step clickable-tech" data-tech="code-pattern-matching">Code Pattern Matching</span> →
+                <span class="flow-step clickable-tech" data-tech="llm-augmented-generation">LLM-Augmented Generation</span> →
+                <span class="flow-step clickable-tech" data-tech="semantic-validation">Semantic Validation</span> →
+                <span class="flow-step clickable-tech" data-tech="workflow-orchestration">Workflow Orchestration</span> →
+                <span class="flow-step clickable-tech" data-tech="application-deployment">Application Deployment</span>
+            </div>
+        </div>
+
+        <!-- Karşılaştırma Bölümü -->
+        <div class="comparison-section">
+            <div class="comparison-title">🔥 Mevcut Sistemlerle Karşılaştırma</div>
+            <div class="comparison-grid">
+                <div class="vs-item">
+                    <div class="vs-title">🎯 Sizin Gelişmiş Sisteminiz</div>
+                    <ul class="feature-list">
+                        <li><span class="clickable-tech" data-tech="semantic-web">Semantic web</span> foundation (RDF/OWL)</li>
+                        <li>Domain-specific MRP/ERP ontologies</li>
+                        <li>End-to-end application generation</li>
+                        <li>Self-healing workflows</li>
+                        <li>Multi-modal reasoning (Semantic+AI)</li>
+                        <li>Context-aware agent coordination</li>
+                        <li>Ontology-guided validation</li>
+                        <li>Real-time process mining</li>
+                    </ul>
+                </div>
+                
+                <div class="vs-item">
+                    <div class="vs-title">⚠️ <span class="clickable-tech" data-tech="langchain">LangChain</span>/<span class="clickable-tech" data-tech="langgraph">LangGraph</span> Sistemleri</div>
+                    <ul class="feature-list">
+                        <li>Modüler agent yapısı</li>
+                        <li>Geniş tool ecosystem</li>
+                        <li>State management</li>
+                    </ul>
+                    <ul class="feature-list weakness-list">
+                        <li>Semantik anlama yok</li>
+                        <li>Domain bilgisi sınırlı</li>
+                        <li>Validation katmanı zayıf</li>
+                        <li>İş süreci entegrasyonu eksik</li>
+                    </ul>
+                </div>
+
+                <div class="vs-item">
+                    <div class="vs-title">⚠️ Ticari AI Kod Üreticileri</div>
+                    <ul class="feature-list">
+                        <li>Hızlı prototipleme</li>
+                        <li>Platform entegrasyonu</li>
+                    </ul>
+                    <ul class="feature-list weakness-list">
+                        <li>Template-based yaklaşım</li>
+                        <li>Sınırlı <span class="clickable-tech" data-tech="reasoning-capability">reasoning capability</span></li>
+                        <li>Özelleştirme kısıtlılığı</li>
+                        <li>Semantic understanding yok</li>
+                    </ul>
+                </div>
+
+                <div class="vs-item">
+                    <div class="vs-title">⚠️ <span class="clickable-tech" data-tech="low-code">Low-Code</span> Platformları</div>
+                    <ul class="feature-list">
+                        <li>Hızlı geliştirme</li>
+                        <li>Visual workflow</li>
+                    </ul>
+                    <ul class="feature-list weakness-list">
+                        <li>AI entegrasyonu sınırlı</li>
+                        <li>Karmaşık iş kuralları zor</li>
+                        <li>Vendor lock-in riski</li>
+                        <li>Semantic reasoning yok</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sonuç -->
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px;">
+            <h2>🚀 Benzersiz Değer Önerisi</h2>
+            <p style="font-size: 1.1em; line-height: 1.6;">
+                Bu gelişmiş mimari, <span class="clickable-tech" data-tech="semantic-web" style="color: #FFE082;">semantic web</span>'in gücünü modern AI teknolojileriyle birleştirerek, 
+                gerçekten "anlayan" ve "öğrenen" bir MRP/ERP kod üretim sistemi oluşturuyor. 
+                Mevcut sistemlerin aksine, sadece pattern matching değil, 
+                <strong>gerçek semantic reasoning</strong> ile çalışıyor.
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="techModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Technology information database
+        const techInfo = {
+            'triple-store': {
+                title: 'Triple Store',
+                description: 'Semantic web veritabanı türü. RDF formatında üçlü (subject-predicate-object) veri yapılarını depolayan ve sorgulayan özel veritabanıdır.',
+                details: 'Triple store\'lar semantic web\'in temel taşıdır. SPARQL sorgu dili ile veri sorgulama yapılır. Apache Jena, Virtuoso, Blazegraph gibi popüler örnekleri vardır.',
+                links: ['https://en.wikipedia.org/wiki/Triplestore', 'https://www.w3.org/TR/rdf11-concepts/']
+            },
+            'inference': {
+                title: 'Inference (Çıkarım)',
+                description: 'Mevcut bilgilerden yeni bilgiler türetme süreci. AI ve semantic web\'te otomatik mantıksal çıkarım yapma yeteneği.',
+                details: 'Ontology-based inference, OWL reasoner\'lar kullanarak implicit bilgileri explicit hale getirir. Forward chaining ve backward chaining teknikleri kullanır.',
+                links: ['https://en.wikipedia.org/wiki/Inference_engine', 'https://www.w3.org/TR/owl2-overview/']
+            },
+            'apache-jena': {
+                title: 'Apache Jena',
+                description: 'Java tabanlı açık kaynak semantic web framework\'ü. RDF, SPARQL, OWL desteği sağlar.',
+                details: 'Apache Jena, semantic web uygulamaları geliştirmek için kapsamlı araçlar sunar. TDB triplestore, Fuseki SPARQL server ve çeşitli reasoner\'lar içerir.',
+                links: ['https://jena.apache.org/', 'https://jena.apache.org/documentation/']
+            },
+            'owl-reasoner': {
+                title: 'OWL Reasoner',
+                description: 'Web Ontology Language (OWL) ontolojileri üzerinde mantıksal çıkarım yapan software araçları.',
+                details: 'Hermit, Pellet, FaCT++ gibi reasoner\'lar ontology consistency checking, classification ve query answering yapar.',
+                links: ['https://www.w3.org/TR/owl2-overview/', 'https://www.hermit-reasoner.com/']
+            },
+            'mrp': {
+                title: 'MRP (Material Requirements Planning)',
+                description: 'Malzeme ihtiyaç planlama sistemi. Üretim süreçlerinde hangi malzemelerin ne zaman ve ne kadar gerekli olduğunu planlar.',
+                details: 'MRP sistemleri master production schedule, bill of materials ve inventory data kullanarak malzeme ihtiyaçlarını hesaplar.',
+                links: ['https://en.wikipedia.org/wiki/Material_requirements_planning', 'https://www.investopedia.com/terms/m/mrp.asp']
+            },
+            'erp': {
+                title: 'ERP (Enterprise Resource Planning)',
+                description: 'Kurumsal kaynak planlama sistemi. Şirketin tüm operasyonel süreçlerini entegre eden kapsamlı yazılım platformu.',
+                details: 'ERP sistemleri finans, HR, satış, satın alma, üretim, lojistik gibi tüm departmanları tek platformda birleştirir.',
+                links: ['https://en.wikipedia.org/wiki/Enterprise_resource_planning', 'https://www.oracle.com/erp/what-is-erp/']
+            },
+            'ontologies': {
+                title: 'Ontologies (Ontolojiler)',
+                description: 'Belirli bir domain\'deki kavramlar, özellikler ve ilişkilerin formal tanımlandığı bilgi yapıları.',
+                details: 'Semantic web\'te OWL dili ile tanımlanan ontolojiler, makinelerin anlamsal işlem yapmasını sağlar.',
+                links: ['https://en.wikipedia.org/wiki/Ontology_(information_science)', 'https://www.w3.org/TR/owl2-primer/']
+            },
+            'business-rules-engine': {
+                title: 'Business Rules Engine',
+                description: 'İş kurallarını kod içinde değil, ayrı konfigürasyon dosyalarında tanımlayarak yönetmeyi sağlayan sistem.',
+                details: 'Drools, JESS, IBM ODM gibi rule engine\'lar if-then kurallarını dinamik olarak işler.',
+                links: ['https://en.wikipedia.org/wiki/Business_rules_engine', 'https://www.drools.org/']
+            },
+            'swrl': {
+                title: 'SWRL (Semantic Web Rule Language)',
+                description: 'Semantic web için özel olarak tasarlanmış kural tanımlama dili. OWL ontolojileri ile entegre çalışır.',
+                details: 'SWRL kuralları OWL\'nin ifade gücünü artırır ve daha karmaşık inference\'lar yapılmasını sağlar.',
+                links: ['https://www.w3.org/Submission/SWRL/', 'https://en.wikipedia.org/wiki/Semantic_Web_Rule_Language']
+            },
+            'context-memory-graph': {
+                title: 'Context Memory Graph',
+                description: 'Konuşma ve domain context\'ini graph yapısında saklayan hafıza sistemi.',
+                details: 'Chatbot ve AI sistemlerinde long-term memory ve context awareness sağlar.',
+                links: ['https://arxiv.org/abs/2010.03341', 'https://github.com/microsoft/MemGPT']
+            },
+            'nlp': {
+                title: 'NLP (Natural Language Processing)',
+                description: 'Doğal dil işleme. Bilgisayarların insan dilini anlama ve işleme yeteneği.',
+                details: 'Tokenization, parsing, semantic analysis, named entity recognition gibi teknikler içerir.',
+                links: ['https://en.wikipedia.org/wiki/Natural_language_processing', 'https://www.nltk.org/']
+            },
+            'llm': {
+                title: 'LLM (Large Language Model)',
+                description: 'Büyük dil modelleri. GPT, Claude, Llama gibi milyarlarca parametre içeren AI modelleri.',
+                details: 'Transformer architecture kullanarak text generation, question answering, code generation yapabilir.',
+                links: ['https://en.wikipedia.org/wiki/Large_language_model', 'https://huggingface.co/models']
+            },
+            'reasoning-coordinator': {
+                title: 'Reasoning Coordinator',
+                description: 'Farklı reasoning türlerini (symbolic, neural, statistical) koordine eden sistem.',
+                details: 'Neuro-symbolic AI yaklaşımında multiple reasoning paradigmalarını birleştirir.',
+                links: ['https://arxiv.org/abs/1711.03902', 'https://www.ibm.com/topics/neuro-symbolic-ai']
+            },
+            'agent-coordination': {
+                title: 'Agent Coordination',
+                description: 'Çoklu AI agent\'ların birlikte çalışmasını koordine eden sistem.',
+                details: 'Multi-agent systems, distributed problem solving ve cooperative AI için temel teknoloji.',
+                links: ['https://en.wikipedia.org/wiki/Multi-agent_system', 'https://www.fipa.org/']
+            },
+            'domain-expert-agent': {
+                title: 'Domain Expert Agent',
+                description: 'Belirli bir uzmanlık alanında (MRP/ERP) derin bilgiye sahip AI agent.',
+                details: 'Domain-specific knowledge base ve reasoning capabilities ile özel problemleri çözer.',
+                links: ['https://en.wikipedia.org/wiki/Expert_system', 'https://www.cs.cmu.edu/~expert/']
+            },
+            'architecture-agent': {
+                title: 'Architecture Agent',
+                description: 'Sistem mimarisi tasarımı ve pattern seçimi konusunda uzmanlaşmış AI agent.',
+                details: 'Software architecture patterns, design principles ve best practices konularında karar verir.',
+                links: ['https://martinfowler.com/architecture/', 'https://docs.microsoft.com/en-us/azure/architecture/']
+            },
+            'code-generation-agent': {
+                title: 'Code Generation Agent',
+                description: 'Doğal dil açıklamalarından kod üreten özelleşmiş AI agent.',
+                details: 'Template matching, AST manipulation ve LLM-based synthesis teknikleri kullanır.',
+                links: ['https://github.com/features/copilot', 'https://openai.com/blog/openai-codex/']
+            },
+            'validation-agent': {
+                title: 'Validation Agent',
+                description: 'Üretilen kodun doğruluğunu, güvenliğini ve kalitesini kontrol eden AI agent.',
+                details: 'Static analysis, semantic validation ve business rule compliance checking yapar.',
+                links: ['https://en.wikipedia.org/wiki/Static_program_analysis', 'https://www.sonarqube.org/']
+            },
+            'integration-agent': {
+                title: 'Integration Agent',
+                description: 'Farklı sistemler arası entegrasyon ve data mapping işlemlerini yöneten AI agent.',
+                details: 'API mapping, data transformation, protocol conversion ve semantic alignment yapar.',
+                links: ['https://en.wikipedia.org/wiki/Enterprise_application_integration', 'https://www.mulesoft.com/']
+            },
+            'test-agent': {
+                title: 'Test Agent',
+                description: 'Otomatik test senaryoları oluşturan ve test süreçlerini yöneten AI agent.',
+                details: 'Unit test, integration test ve acceptance test generation ile QA süreçlerini otomatikleştirir.',
+                links: ['https://en.wikipedia.org/wiki/Test_automation', 'https://www.selenium.dev/']
+            },
+            'dsl': {
+                title: 'DSL (Domain Specific Language)',
+                description: 'Belirli bir problem domain\'i için özel olarak tasarlanmış programlama dili.',
+                details: 'SQL, HTML, CSS gibi örnekleri vardır. Business rules için özel DSL\'ler oluşturulabilir.',
+                links: ['https://en.wikipedia.org/wiki/Domain-specific_language', 'https://martinfowler.com/books/dsl.html']
+            },
+            'pattern-library': {
+                title: 'Pattern Library',
+                description: 'Yaygın kullanılan kod kalıpları ve design pattern\'lerin koleksiyonu.',
+                details: 'Gang of Four patterns, enterprise patterns ve domain-specific pattern\'leri içerir.',
+                links: ['https://en.wikipedia.org/wiki/Software_design_pattern', 'https://refactoring.guru/design-patterns']
+            },
+            'python': {
+                title: 'Python',
+                description: 'Yüksek seviyeli, genel amaçlı programlama dili. AI ve data science\'ta çok popüler.',
+                details: 'TensorFlow, PyTorch, scikit-learn gibi kütüphanelerle AI development için ideal.',
+                links: ['https://www.python.org/', 'https://docs.python.org/3/']
+            },
+            'java': {
+                title: 'Java',
+                description: 'Platform bağımsız, nesne yönelimli programlama dili. Enterprise uygulamalarda yaygın.',
+                details: 'JVM üzerinde çalışır, Spring Framework ile enterprise development için güçlü ecosystem.',
+                links: ['https://www.oracle.com/java/', 'https://docs.oracle.com/en/java/']
+            },
+            'javascript': {
+                title: 'JavaScript',
+                description: 'Web development için temel programlama dili. Frontend ve backend\'te kullanılır.',
+                details: 'Node.js, React, Vue.js gibi framework\'lerle full-stack development mümkün.',
+                links: ['https://developer.mozilla.org/en-US/docs/Web/JavaScript', 'https://nodejs.org/']
+            },
+            'sql': {
+                title: 'SQL (Structured Query Language)',
+                description: 'İlişkisel veritabanları için standart sorgu dili.',
+                details: 'ANSI/ISO standardı, MySQL, PostgreSQL, Oracle, SQL Server gibi tüm RDBMS\'lerde kullanılır.',
+                links: ['https://en.wikipedia.org/wiki/SQL', 'https://www.w3schools.com/sql/']
+            },
+            'application-assembler': {
+                title: 'Application Assembler',
+                description: 'Farklı komponentleri birleştirerek tam bir uygulama oluşturan sistem.',
+                details: 'Microservices architecture, containerization ve orchestration teknolojileri kullanır.',
+                links: ['https://microservices.io/', 'https://kubernetes.io/']
+            },
+            'n8n': {
+                title: 'n8n',
+                description: 'Workflow automation aracı. Node-based visual editor ile iş süreçlerini otomatikleştirir.',
+                details: 'Open source, self-hosted, 200+ integration ile API\'ları birbirine bağlar.',
+                links: ['https://n8n.io/', 'https://docs.n8n.io/']
+            },
+            'event-driven-architecture': {
+                title: 'Event-Driven Architecture',
+                description: 'Olaylar (events) etrafında tasarlanan mimari yaklaşım. Loosely coupled sistemler oluşturur.',
+                details: 'Apache Kafka, RabbitMQ, AWS EventBridge gibi event streaming platformları kullanır.',
+                links: ['https://en.wikipedia.org/wiki/Event-driven_architecture', 'https://kafka.apache.org/']
+            },
+            'self-healing-workflows': {
+                title: 'Self-Healing Workflows',
+                description: 'Hataları otomatik tespit edip düzelten, kendini onaran iş akışları.',
+                details: 'Circuit breaker pattern, retry mechanisms ve automatic rollback özellikleri içerir.',
+                links: ['https://martinfowler.com/bliki/CircuitBreaker.html', 'https://microservices.io/patterns/']
+            },
+            'process-mining': {
+                title: 'Process Mining',
+                description: 'İş süreçlerini analiz etmek için event log\'lardan process model\'leri çıkaran teknik.',
+                details: 'Bottleneck detection, compliance checking ve process optimization için kullanılır.',
+                links: ['https://en.wikipedia.org/wiki/Process_mining', 'https://www.celonis.com/']
+            },
+            'semantic-triple-store': {
+                title: 'Semantic Triple Store',
+                description: 'RDF formatında semantic bilgiyi depolayan özelleşmiş veritabanı türü.',
+                details: 'SPARQL endpoint\'leri sağlar, reasoning capabilities ve federation desteği vardır.',
+                links: ['https://www.w3.org/TR/rdf11-concepts/', 'https://virtuoso.openlinksw.com/']
+            },
+            'rdf': {
+                title: 'RDF (Resource Description Framework)',
+                description: 'Web\'deki kaynakları tanımlamak için W3C standardı. Semantic web\'in temel yapı taşı.',
+                details: 'Subject-Predicate-Object üçlüleri ile bilgiyi graph formatında temsil eder.',
+                links: ['https://www.w3.org/TR/rdf11-concepts/', 'https://www.w3.org/RDF/']
+            },
+            'document-store': {
+                title: 'Document Store',
+                description: 'JSON benzeri dokümanlarda veri saklayan NoSQL veritabanı türü.',
+                details: 'Schema-less yapı, horizontal scaling ve complex data types desteği sağlar.',
+                links: ['https://en.wikipedia.org/wiki/Document-oriented_database', 'https://www.mongodb.com/']
+            },
+            'mongodb': {
+                title: 'MongoDB',
+                description: 'En popüler document-oriented NoSQL veritabanı. JSON-like BSON formatı kullanır.',
+                details: 'Sharding, replication, aggregation pipeline ve full-text search özellikleri vardır.',
+                links: ['https://www.mongodb.com/', 'https://docs.mongodb.com/']
+            },
+            'vector-database': {
+                title: 'Vector Database',
+                description: 'Yüksek boyutlu vektörleri (embeddings) saklayan ve similarity search yapan özel veritabanı.',
+                details: 'AI uygulamalarında semantic search, recommendation systems için kullanılır.',
+                links: ['https://en.wikipedia.org/wiki/Vector_database', 'https://www.pinecone.io/']
+            },
+            'erp-connectors': {
+                title: 'ERP Connectors',
+                description: 'ERP sistemlerine bağlanmak için özel adaptör ve entegrasyon komponentleri.',
+                details: 'REST API, SOAP, EDI, file-based integration yöntemleri desteklenir.',
+                links: ['https://en.wikipedia.org/wiki/Enterprise_application_integration', 'https://www.mulesoft.com/']
+            },
+            'sap': {
+                title: 'SAP',
+                description: 'Dünyanın en büyük enterprise software şirketi. ERP sistemlerin lideri.',
+                details: 'SAP S/4HANA, SuccessFactors, Ariba gibi cloud ve on-premise çözümler sunar.',
+                links: ['https://www.sap.com/', 'https://help.sap.com/']
+            },
+            'oracle': {
+                title: 'Oracle',
+                description: 'Database ve enterprise software üreticisi. Oracle ERP Cloud, NetSuite sunar.',
+                details: 'Database technology leader, Java\'nın sahibi, cloud infrastructure sağlayıcısı.',
+                links: ['https://www.oracle.com/', 'https://docs.oracle.com/']
+            },
+            'dynamics365': {
+                title: 'Microsoft Dynamics 365',
+                description: 'Microsoft\'un cloud-based ERP ve CRM çözümü paketi.',
+                details: 'Business Central, Finance & Operations, Sales, Marketing modülleri içerir.',
+                links: ['https://dynamics.microsoft.com/', 'https://docs.microsoft.com/en-us/dynamics365/']
+            },
+            'natural-language-processing': {
+                title: 'Natural Language Processing',
+                description: 'Bilgisayarların insan dilini anlama ve işleme teknolojisi.',
+                details: 'Tokenization, POS tagging, NER, sentiment analysis, machine translation içerir.',
+                links: ['https://en.wikipedia.org/wiki/Natural_language_processing', 'https://www.nltk.org/']
+            },
+            'semantic-nlp-parsing': {
+                title: 'Semantic NLP Parsing',
+                description: 'Doğal dili sadece syntax değil, semantic (anlam) seviyesinde çözümleme.',
+                details: 'Semantic role labeling, word sense disambiguation ve ontology mapping içerir.',
+                links: ['https://en.wikipedia.org/wiki/Semantic_parsing', 'https://allennlp.org/']
+            },
+            'ontology-understanding': {
+                title: 'Ontology Understanding',
+                description: 'Domain ontolojilerini kullanarak kavramsal anlama ve reasoning yapma süreci.',
+                details: 'Concept mapping, relation extraction ve semantic similarity calculation içerir.',
+                links: ['https://www.w3.org/TR/owl2-primer/', 'https://protege.stanford.edu/']
+            },
+            'knowledge-graph-query': {
+                title: 'Knowledge Graph Query',
+                description: 'Knowledge graph\'lardan bilgi çıkarma ve sorgulama işlemleri.',
+                details: 'SPARQL, Cypher, Gremlin gibi graph query language\'ları kullanılır.',
+                links: ['https://www.w3.org/TR/sparql11-query/', 'https://neo4j.com/developer/cypher/']
+            },
+            'multi-agent-reasoning': {
+                title: 'Multi-Agent Reasoning',
+                description: 'Birden fazla AI agent\'ın koordineli şekilde problem çözme süreci.',
+                details: 'Distributed reasoning, consensus algorithms ve collaborative decision making içerir.',
+                links: ['https://en.wikipedia.org/wiki/Multi-agent_system', 'https://www.fipa.org/']
+            },
+            'code-pattern-matching': {
+                title: 'Code Pattern Matching',
+                description: 'Kod kalıplarını tanıma ve benzer yapıları bulma teknikleri.',
+                details: 'AST analysis, similarity metrics ve template matching algorithms kullanır.',
+                links: ['https://en.wikipedia.org/wiki/Pattern_matching', 'https://tree-sitter.github.io/tree-sitter/']
+            },
+            'llm-augmented-generation': {
+                title: 'LLM-Augmented Generation',
+                description: 'Large Language Model\'lerin desteklediği kod ve içerik üretim süreci.',
+                details: 'Prompt engineering, fine-tuning ve retrieval-augmented generation teknikleri içerir.',
+                links: ['https://arxiv.org/abs/2005.11401', 'https://huggingface.co/docs/transformers/']
+            },
+            'semantic-validation': {
+                title: 'Semantic Validation',
+                description: 'Üretilen kodun semantic doğruluğunu kontrol etme süreci.',
+                details: 'Type checking, constraint validation ve business rule compliance içerir.',
+                links: ['https://en.wikipedia.org/wiki/Semantic_analysis_(compilers)', 'https://www.sonarqube.org/']
+            },
+            'workflow-orchestration': {
+                title: 'Workflow Orchestration',
+                description: 'İş akışlarının otomatik yönetimi ve koordinasyonu.',
+                details: 'Apache Airflow, Prefect, Temporal gibi orchestration engine\'ları kullanılır.',
+                links: ['https://airflow.apache.org/', 'https://temporal.io/']
+            },
+            'application-deployment': {
+                title: 'Application Deployment',
+                description: 'Uygulamaların production ortamına otomatik dağıtım süreci.',
+                details: 'CI/CD pipelines, containerization, blue-green deployment stratejileri içerir.',
+                links: ['https://en.wikipedia.org/wiki/Software_deployment', 'https://kubernetes.io/']
+            },
+            'semantic-web': {
+                title: 'Semantic Web',
+                description: 'Web\'in gelişimi için Tim Berners-Lee\'nin vizyonu. Makinelerin anlayabileceği web.',
+                details: 'RDF, OWL, SPARQL teknolojileri ile linked data ve knowledge graph\'lar oluşturur.',
+                links: ['https://www.w3.org/standards/semanticweb/', 'https://en.wikipedia.org/wiki/Semantic_Web']
+            },
+            'langchain': {
+                title: 'LangChain',
+                description: 'LLM uygulamaları geliştirmek için Python/JavaScript framework\'ü.',
+                details: 'Chain composition, agent building, memory management ve tool integration sunar.',
+                links: ['https://python.langchain.com/', 'https://github.com/langchain-ai/langchain']
+            },
+            'langgraph': {
+                title: 'LangGraph',
+                description: 'LangChain ekosisteminin parçası. Graph-based workflow ve agent orchestration.',
+                details: 'Stateful multi-actor applications, cyclical flows ve complex agent interactions destekler.',
+                links: ['https://python.langchain.com/docs/langgraph', 'https://github.com/langchain-ai/langgraph']
+            },
+            'reasoning-capability': {
+                title: 'Reasoning Capability',
+                description: 'AI sistemlerinin mantıksal çıkarım ve problem çözme yeteneği.',
+                details: 'Deductive, inductive, abductive reasoning türleri ve symbolic/neural approaches içerir.',
+                links: ['https://en.wikipedia.org/wiki/Automated_reasoning', 'https://plato.stanford.edu/entries/reasoning-automated/']
+            },
+            'low-code': {
+                title: 'Low-Code Platforms',
+                description: 'Minimal kod yazarak uygulama geliştirmeyi sağlayan visual development platformları.',
+                details: 'Drag-drop interfaces, pre-built components ve automated code generation sunar.',
+                links: ['https://en.wikipedia.org/wiki/Low-code_development_platform', 'https://www.gartner.com/en/information-technology/glossary/low-code-development-platforms-lcdp']
+            }
+        };
+
+        // Modal elements
+        const modal = document.getElementById('techModal');
+        const modalContent = document.getElementById('modalContent');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        // Add click event listeners to all clickable tech terms
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickableElements = document.querySelectorAll('.clickable-tech');
+            
+            clickableElements.forEach(element => {
+                element.addEventListener('click', function() {
+                    const techKey = this.getAttribute('data-tech');
+                    const info = techInfo[techKey];
+                    if (info && info.links && info.links.length > 0) {
+                        window.open(info.links[0], '_blank');
+                    } else {
+                        alert('Wikipedia bağlantısı bulunamadı.');
+                    }
+                });
+            });
+        });
+
+        // Show technology information in modal
+        function showTechInfo(techKey) {
+            const info = techInfo[techKey];
+            if (!info) {
+                modalContent.innerHTML = `
+                    <h3>Bilgi Bulunamadı</h3>
+                    <p>Bu teknoloji hakkında henüz detaylı bilgi eklenmemiş.</p>
+                `;
+            } else {
+                let linksHtml = '';
+                if (info.links && info.links.length > 0) {
+                    linksHtml = '<div style="margin-top: 20px;"><strong>Daha Fazla Bilgi:</strong><br>';
+                    info.links.forEach(link => {
+                        linksHtml += `<a href="${link}" target="_blank" class="external-link">📖 Daha Fazla Oku</a> `;
+                    });
+                    linksHtml += '</div>';
+                }
+
+                modalContent.innerHTML = `
+                    <h3>🔧 ${info.title}</h3>
+                    <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <strong>Açıklama:</strong><br>
+                        ${info.description}
+                    </div>
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <strong>Detaylar:</strong><br>
+                        ${info.details}
+                    </div>
+                    ${linksHtml}
+                `;
+            }
+            modal.style.display = 'block';
+        }
+
+        // Close modal when clicking X
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Add some visual feedback for clickable elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .clickable-tech {
+                    position: relative;
+                    background: linear-gradient(45deg, transparent 0%, rgba(33, 150, 243, 0.1) 50%, transparent 100%);
+                    padding: 2px 4px;
+                    border-radius: 4px;
+                    border-bottom: 1px dotted #2196F3;
+                }
+                .clickable-tech::after {
+                    content: "🔍";
+                    font-size: 0.8em;
+                    opacity: 0.6;
+                    margin-left: 3px;
+                }
+                .clickable-tech:hover::after {
+                    opacity: 1;
+                }
+            `;
+            document.head.appendChild(style);
+        });
